@@ -1,9 +1,11 @@
 require 'json'
+require 'byebug'
 
 class Session
   # find the cookie for this app
   # deserialize the cookie into a hash
   def initialize(req)
+    debugger
     biscuit = req.cookies['_rails_lite_app']
     biscuit.nil? ? @cookie = {} : @cookie = JSON.parse(biscuit)
   end
