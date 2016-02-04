@@ -3,6 +3,7 @@ require 'active_support/core_ext'
 require 'erb'
 require 'active_support/inflector'
 require_relative './session'
+require_relative './flash'
 
 class ControllerBase
   attr_reader :req, :res, :params
@@ -24,8 +25,8 @@ class ControllerBase
     fail if @already_built_response
     @res['Location'] = url
     @res.status = 302
-    @session.store_session(@res)
-    @flash.store_session(@res)
+    session.store_session(@res)
+    flash.store_flash(@res)
     @already_built_response = true
   end
 
@@ -36,8 +37,8 @@ class ControllerBase
     fail if @already_built_response
     @res['Content-Type'] = content_type
     @res.write(content)
-    @session.store_session(@res)
-    @flash.store_session(@res)
+    session.store_session(@res)
+    flash.store_flash(@res)
     @already_built_response = true
   end
 
